@@ -11,10 +11,13 @@ const formatTime = (seconds) => {
   return `${minutes}:${String(remainder).padStart(2, "0")}`;
 };
 
+
+
 const SpeakingPracticePage = () => {
   const navigate = useNavigate();
   const { topics, selectedTopic, secondsLeft, isTimerRunning, toggleTimer, tickTimer, setTimer } = useAppStore();
   const [duration, setDuration] = useState(120);
+  const [customMinutes, setCustomMinutes] = useState("2");
 
   const topicNumber = useMemo(() => {
     const index = topics.findIndex((topic) => topic.title === selectedTopic?.title);
@@ -30,6 +33,15 @@ const SpeakingPracticePage = () => {
   const chooseDuration = (value) => {
     setDuration(value);
     setTimer(value);
+  };
+
+  const chooseCustomDuration = () => {
+    const minutes = Number(customMinutes);
+    if (!Number.isFinite(minutes) || minutes <= 0) return;
+
+    const seconds = Math.round(minutes * 60);
+    setDuration(seconds);
+    setTimer(seconds);
   };
 
   if (!selectedTopic) {
@@ -64,6 +76,21 @@ const SpeakingPracticePage = () => {
               {value < 60 ? `${value} sec` : `${value / 60} min`}
             </button>
           ))}
+          <label className="custom-duration">
+            <input
+              type="number"
+              min="0.1"
+              step="0.1"
+              value={customMinutes}
+              onChange={(event) => setCustomMinutes(event.target.value)}
+              onKeyDown={(event) => {
+                if (event.key === "Enter") chooseCustomDuration();
+              }}
+              onBlur={chooseCustomDuration}
+              aria-label="Custom duration in minutes"
+            />
+            <span>min</span>
+          </label>
         </div>
 
         <div className="practice-stage">
@@ -82,10 +109,12 @@ const SpeakingPracticePage = () => {
           <h2><Lightbulb size={21} /> Tips</h2>
           <ul><li>Speak naturally</li><li>Take your time</li><li>Explain with examples</li><li>Try to be concise</li></ul>
         </aside>
+
       </section>
       <p className="practice-note">Good<br />Speakers<br /><span>Build Better Futures.</span></p>
     </main>
   );
 };
+
 
 export default SpeakingPracticePage;

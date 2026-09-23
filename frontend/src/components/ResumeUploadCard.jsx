@@ -95,3 +95,8 @@ const ResumeUploadCard = () => {
 };
 
 export default ResumeUploadCard;
+
+
+
+
+

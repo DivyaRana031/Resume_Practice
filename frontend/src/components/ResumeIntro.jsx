@@ -49,11 +49,10 @@ const ResumeIntro = () => {
         {/* Heading */}
         <h1
           className="
-            font-['Plus_Jakarta_Sans']
             text-[clamp(48px,4.2vw,68px)]
-            font-bold
+            font-extrabold
             leading-[0.98]
-            tracking-[-3px]
+            tracking-[-2.5px]
             text-[#17211F]
           "
         >
@@ -88,7 +87,6 @@ const ResumeIntro = () => {
           className="
             mt-7
             max-w-[500px]
-            font-['Inter']
             text-[17px]
             font-normal
             leading-[1.55]
@@ -129,7 +127,6 @@ const ResumeIntro = () => {
                 {/* Label */}
                 <span
                   className="
-                    font-['Inter']
                     text-[13px]
                     font-semibold
                     leading-[1.45]
