@@ -1,3 +1,4 @@
+
 import os
 
 from dotenv import load_dotenv
@@ -11,12 +12,11 @@ load_dotenv()
 
 app = FastAPI()
 
-frontend_url = os.getenv("FRONTEND_URL", "http://localhost:5173")
-allowed_origins = [origin.strip() for origin in frontend_url.split(",") if origin.strip()]
+frontend_url = os.getenv("FRONTEND_URL")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=allowed_origins,
+    allow_origins=[frontend_url],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
