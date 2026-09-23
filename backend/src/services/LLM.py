@@ -2,7 +2,9 @@ from functools import lru_cache
 import json
 import re
 
+# from langchain_groq import ChatGroq              # Still needed — used for generate_topics
 from langchain_groq import ChatGroq
+# from langchain_core.prompts import ChatPromptTemplate  # Still needed — used for TOPICS_PROMPT
 from langchain_core.prompts import ChatPromptTemplate
 
 import os
@@ -13,48 +15,53 @@ load_dotenv()
 
 
 # --------------------------------------------------
-# Get Groq LLM
+# Get Groq LLM (for query/answer — NOT used right now)
 # --------------------------------------------------
 
-@lru_cache(maxsize=1)
-def get_llm() -> ChatGroq:
-    """
-    Create and cache the Groq LLM instance.
-    """
-
-    return ChatGroq(
-        model="qwen/qwen3.8-27b",
-        temperature=0,
-        api_key=os.getenv("GROQ_API_KEY"),
-    )
+# @lru_cache(maxsize=1)
+# def get_llm() -> ChatGroq:
+#     """
+#     Create and cache the Groq LLM instance.
+#     Used by generate_answer() for Pinecone-based Q&A — not needed right now.
+#     """
+#     return ChatGroq(
+#         model="qwen/qwen3.8-27b",
+#         temperature=0,
+#         api_key=os.getenv("GROQ_API_KEY"),
+#     )
 
 
 # --------------------------------------------------
-# Prompt
+# PROMPT for Q&A (NOT used right now — Pinecone/query flow commented out)
 # --------------------------------------------------
 
-PROMPT = ChatPromptTemplate.from_template(
-    """
-You are a medical information assistant.
+# PROMPT = ChatPromptTemplate.from_template(
+#     """
+# You are a medical information assistant.
+#
+# Answer the user's question using the provided context.
+#
+# Rules:
+# - Use the provided context as the primary source.
+# - Do not invent medical information that is not supported by the context.
+# - If the answer cannot be found in the context, clearly say that the information is not available in the provided documents.
+# - Give a clear and concise answer.
+# - This is general medical information, not a diagnosis or personalized medical advice.
+#
+# Context:
+# {context}
+#
+# User Question:
+# {query}
+#
+# Answer:
+# """
+# )
 
-Answer the user's question using the provided context.
 
-Rules:
-- Use the provided context as the primary source.
-- Do not invent medical information that is not supported by the context.
-- If the answer cannot be found in the context, clearly say that the information is not available in the provided documents.
-- Give a clear and concise answer.
-- This is general medical information, not a diagnosis or personalized medical advice.
-
-Context:
-{context}
-
-User Question:
-{query}
-
-Answer:
-"""
-)
+# --------------------------------------------------
+# TOPICS PROMPT (ACTIVE — used by generate_topics)
+# --------------------------------------------------
 
 TOPICS_PROMPT = ChatPromptTemplate.from_template(
     """
@@ -186,6 +193,12 @@ Document:
 {document}
 """
 )
+
+
+# --------------------------------------------------
+# Get Topics LLM (ACTIVE)
+# --------------------------------------------------
+
 @lru_cache(maxsize=1)
 def get_topics_llm() -> ChatGroq:
     """Use a bounded client so topic generation fits the Groq output quota."""
@@ -199,35 +212,23 @@ def get_topics_llm() -> ChatGroq:
 
 
 # --------------------------------------------------
-# Generate Answer
+# Generate Answer (NOT used right now — Pinecone/query flow commented out)
 # --------------------------------------------------
 
-def generate_answer(
-    query: str,
-    context: str
-) -> str:
-    """
-    Generate an answer using Groq LLM.
+# def generate_answer(query: str, context: str) -> str:
+#     """
+#     Generate an answer using Groq LLM.
+#     Requires Pinecone-retrieved context — not used right now.
+#     """
+#     llm = get_llm()
+#     prompt = PROMPT.format(context=context, query=query)
+#     response = llm.invoke(prompt)
+#     return response.content
 
-    Args:
-        query: User's question.
-        context: Relevant chunks retrieved from Pinecone.
 
-    Returns:
-        Generated answer as a string.
-    """
-
-    llm = get_llm()
-
-    prompt = PROMPT.format(
-        context=context,
-        query=query
-    )
-
-    response = llm.invoke(prompt)
-
-    return response.content
-
+# --------------------------------------------------
+# Generate Topics (ACTIVE)
+# --------------------------------------------------
 
 def generate_topics(document: str) -> list[dict]:
     """Generate and validate document-grounded topics in one LLM call."""
@@ -243,8 +244,6 @@ def generate_topics(document: str) -> list[dict]:
         raise ValueError("The LLM returned invalid topic JSON") from exc
 
     topics = payload.get("topics") if isinstance(payload, dict) else None
-    # if not isinstance(topics, list) or not 30 <= len(topics) <= 50:
-    #     raise ValueError("The LLM must return between 30 and 50 topics")
 
     required_fields = {"title", "category", "difficulty", "description", "followUpQuestions"}
     validated_topics = []
