@@ -48,10 +48,11 @@ embeddings = EmbeddingProxy()
 # --------------------------------------------------
 
 _vectorstore = None
+_index = None
 
-def get_vectorstore():
-    global _vectorstore
-    if _vectorstore is None:
+def get_index():
+    global _index
+    if _index is None:
         pc = Pinecone(api_key=PINECONE_API_KEY)
         
         # Check if index exists, create if missing
@@ -65,9 +66,15 @@ def get_vectorstore():
                 spec=ServerlessSpec(cloud="aws", region="us-east-1")
             )
         
-        index = pc.Index(INDEX_NAME)
+        _index = pc.Index(INDEX_NAME)
+    return _index
+
+
+def get_vectorstore():
+    global _vectorstore
+    if _vectorstore is None:
         _vectorstore = PineconeVectorStore(
-            index=index,
+            index=get_index(),
             embedding=get_embeddings()
         )
     return _vectorstore

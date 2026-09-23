@@ -6,6 +6,7 @@ from PyPDF2 import PdfReader
 from src.services.text_cleaner import clean_text
 from src.services.chunking import split_into_chunks
 from src.services.ingest import store_chunks
+from src.services.LLM import generate_topics
 
 
 def extract_text(pdf_bytes: bytes) -> str:
@@ -31,6 +32,11 @@ async def ingest_document(file: UploadFile) -> dict:
     # Step 2: Clean
     cleaned_text = clean_text(raw_text)
     print(f"[Pipeline] Cleaned text: {len(cleaned_text)} chars")
+    if not cleaned_text:
+        raise ValueError("The uploaded PDF contains no extractable text")
+
+    topics = generate_topics(cleaned_text)
+    print(f"[Pipeline] Generated {len(topics)} speaking topics")
 
     # Step 3: Chunk
     chunks = split_into_chunks(cleaned_text)
@@ -49,6 +55,7 @@ async def ingest_document(file: UploadFile) -> dict:
         "cleaned_length": len(cleaned_text),
         "chunks": len(chunks),
         "stored": len(documents),
+        "topics": topics,
     }
 
 

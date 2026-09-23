@@ -6,7 +6,6 @@ from src.routes.query import router as query_router
 
 app = FastAPI()
 
-# Allow frontend (Vite dev server) to call the backend
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -15,13 +14,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
-@app.get("/api/hello")
-def hello():
-    return {"message": "Hello from backend"}
-
-
-# Include route files
 app.include_router(pdf_router)
 app.include_router(query_router)
 
