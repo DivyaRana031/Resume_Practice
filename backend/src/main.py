@@ -5,8 +5,8 @@ from dotenv import load_dotenv
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 
-from src.routes.pdf import router as pdf_router
-# from src.routes.query import router as query_router
+# Load environment variables before importing modules that read them at import time.
+load_dotenv()
 
 # Setup logging
 logging.basicConfig(
@@ -15,7 +15,8 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-load_dotenv()
+from src.routes.pdf import router as pdf_router
+# from src.routes.query import router as query_router
 
 app = FastAPI()
 
