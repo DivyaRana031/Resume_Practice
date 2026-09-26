@@ -49,7 +49,7 @@ const ResumeIntro = () => {
         {/* Heading */}
         <h1
           className="
-            text-[clamp(48px,4.2vw,68px)]
+            text-[clamp(50px,4.2vw,68px)]
             font-extrabold
             leading-[0.98]
             tracking-[-2.5px]
@@ -88,7 +88,7 @@ const ResumeIntro = () => {
             mt-7
             max-w-[500px]
             text-[17px]
-            font-normal
+            font-bold
             leading-[1.55]
             text-[#68736F]
           "
@@ -104,14 +104,14 @@ const ResumeIntro = () => {
             ({ icon: Icon, label, iconClass }) => (
               <div
                 key={iconClass}
-                className="flex min-w-[105px] flex-col items-start gap-2.5"
+                className="flex min-w-[130px] flex-col items-start gap-2.5"
               >
                 {/* Icon */}
                 <div
                   className={`
                     flex
-                    h-12
-                    w-12
+                    h-16
+                    w-16
                     items-center
                     justify-center
                     rounded-[15px]
@@ -119,7 +119,7 @@ const ResumeIntro = () => {
                   `}
                 >
                   <Icon
-                    size={23}
+                    size={30}
                     strokeWidth={2}
                   />
                 </div>
@@ -127,8 +127,8 @@ const ResumeIntro = () => {
                 {/* Label */}
                 <span
                   className="
-                    text-[13px]
-                    font-semibold
+                    text-[15px]
+                    font-bold
                     leading-[1.45]
                     text-[#17211F]
                   "
@@ -147,7 +147,7 @@ const ResumeIntro = () => {
             -bottom-[145px]
             -left-5
             flex
-            rotate-[-3deg]
+            rotate-[-4deg]
             items-end
             gap-3
             text-[#176B5B]
@@ -157,7 +157,7 @@ const ResumeIntro = () => {
             className="
               font-['Comic_Sans_MS']
               text-[17px]
-              font-semibold
+              font-bold
               leading-[1.15]
               tracking-[0.3px]
             "
@@ -169,11 +169,7 @@ const ResumeIntro = () => {
             Big Progress.
           </span>
 
-          <ArrowUpRight
-            size={30}
-            strokeWidth={1.7}
-            className="mb-0.5 rotate-[12deg]"
-          />
+         
         </div>
 
       </div>

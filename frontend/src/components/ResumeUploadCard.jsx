@@ -6,7 +6,7 @@ import useAppStore from "../store/useAppStore";
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
 
 const DocumentIcon = () => (
-  <svg viewBox="0 0 48 48" aria-hidden="true" className="document-icon">
+  <svg viewBox="0 0 48 48" aria-hidden="true" className="document-icon !h-[66px] !w-[66px]  !translate-x-2 !translate-y-2">
     <path d="M14 5h14l9 9v29H14z" />
     <path d="M28 5v10h9M20 24h11M20 31h11M20 38h7" />
   </svg>
@@ -65,28 +65,63 @@ const ResumeUploadCard = () => {
 
   return (
     <section
-      className={`upload-card ${isDragging ? "is-dragging" : ""} ${file ? "has-file" : ""}`}
+      className={`upload-card  
+         w-[45vw]
+    min-h-[700vh]
+    max-w-[600px]
+    rounded-[30px] 
+     border
+    border-[#dce9e5]
+    bg-white
+    p-10
+    shadow-[0_15px_40px_rgba(22,139,120,0.08)]
+    flex
+    items-center
+    justify-center
+
+    ${isDragging ? "is-dragging" : ""} ${file ? "has-file" : ""}`}
       onDragOver={(event) => { event.preventDefault(); setIsDragging(true); }}
       onDragLeave={() => setIsDragging(false)}
       onDrop={handleDrop}
     >
       {isAnalyzing ? (
-        <div className="loading-state">
+        <div className="loading-state ">
           <div className="loading-mark" aria-hidden="true"><span /><span /><span /></div>
-          <h2>Uploading your resume...</h2>
+          <h2 >Uploading your resume...</h2>
           <p>Finding projects, skills, and experiences...</p>
           <p>Creating your speaking topics...</p>
           <div className="progress-track"><span /></div>
         </div>
       ) : (
         <div className="empty-upload-state">
-          <div className="upload-icon-wrap"><DocumentIcon /><span>↑</span></div>
-          <h2>Upload your resume</h2>
-          <p className="file-types">PDF or DOCX <span>·</span> Max 5 MB</p>
-          <button className="primary-button" onClick={() => inputRef.current?.click()}>Choose file</button>
+          <div className="upload-icon-wrap relative mb-6 flex h-[80px] w-[80px] !items-center !justify-center  bg-[#EEF8F4] text-[#07152f]  shadow-[0_8px_25px_rgba(22,139,120,0.08)] rounded-[24px] "><DocumentIcon /><span  className="
+      absolute
+      bottom-1
+      right-1
+      flex
+      h-7
+      w-7
+      items-center
+      justify-center
+      rounded-full
+      bg-[#176B5B]
+      text-lg
+      font-bold
+      text-white
+    ">↑</span></div>
+          <h2 className="text=[50px] font-extrabold  leading-tight tracking-[-0.8px] text-[#07152f]">Upload Your Resume</h2>
+          <p className="file-types !text-[13px] font-bold ">PDF or DOCX <span>·</span> Max 5 MB</p>
+          <button className="primary-button !w-full
+    rounded-xl
+    !text-xl
+    !font-semibold
+    transition-all
+    duration-300
+    
+    " onClick={() => inputRef.current?.click()}>Choose file</button>
           <input ref={inputRef} type="file" accept=".pdf,.docx,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document" onChange={(event) => selectFile(event.target.files[0])} hidden />
-          <p className="drop-hint">or drag and drop it here</p>
-          <p className="privacy-note">Your resume is used only to create your personalized topics.</p>
+          <p className="drop-hint !mt-4 !text-[15px] !font-semibold text-[#68736F]">or drag and drop it here</p>
+          <p className="privacy-note mt-6 max-w-[320px] !text-[13px] !font-medium leading-relaxed text-[#98A29E]">Your resume is used only to create your personalized topics.</p>
         </div>
       )}
       {error && <p className="upload-error">{error}</p>}

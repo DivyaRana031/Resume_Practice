@@ -10,8 +10,8 @@ const ResumeUploadPage = () => {
         !w-full
         !max-w-none
         !p-0
-        overflow-hidden
-        bg-[#f4f1e9]
+        overflow-visible
+        bg-[#efe1bb]
       "
     >
       {/* =====================================================
@@ -27,7 +27,7 @@ const ResumeUploadPage = () => {
           min-h-screen
           overflow-hidden
           rounded-none
-          bg-[#fdfcf9]
+          bg-[#f9f7f0]
         "
       >
 
@@ -68,58 +68,57 @@ const ResumeUploadPage = () => {
               flex
               items-center
               gap-3
-              text-[22px]
-              font-bold
+              text-[25px]
+              font-extrabold
               tracking-[-0.6px]
               text-[#10211f]
             "
           >
             <span className="flex h-7 items-center gap-[3px]">
-              <span className="h-[8px] w-[3px] rounded-full bg-[#168b78]" />
-              <span className="h-[15px] w-[3px] rounded-full bg-[#168b78]" />
-              <span className="h-[24px] w-[3px] rounded-full bg-[#168b78]" />
-              <span className="h-[17px] w-[3px] rounded-full bg-[#168b78]" />
-              <span className="h-[9px] w-[3px] rounded-full bg-[#168b78]" />
+              <span className="h-[8px] w-[4px] rounded-full bg-[#168b78] font-bold" />
+              <span className="h-[15px] w-[4px] rounded-full bg-[#168b78] font-bold" />
+              <span className="h-[24px] w-[4px] rounded-full bg-[#168b78] font-bold" />
+              <span className="h-[17px] w-[4px] rounded-full bg-[#168b78] font-bold" />
+              <span className="h-[9px] w-[4px] rounded-full bg-[#168b78] font-bold" />
             </span>
 
             SpeechPact
           </a>
 
-          {/* TAGLINE */}
+         {/* TAGLINE */}
 
-          <div className="relative">
-            <p
-              className="
-                text-[17px]
-                font-medium
-                tracking-[-0.3px]
-                text-[#07152f]
-              "
-            >
-              Just Speak. Get Better.
-            </p>
+<div className="relative">
+  <p
+    className="
+      text-[18px]
+      font-bold
+      tracking-[-0.4px]
+      text-[#07152f]
+    "
+  >
+    Just Speak. Get Better.
+  </p>
 
-            <svg
-              className="
-                absolute
-                -bottom-[13px]
-                right-0
-                h-[13px]
-                w-[80px]
-              "
-              viewBox="0 0 80 13"
-              fill="none"
-            >
-              <path
-                d="M2 10C21 5 45 7 77 2"
-                stroke="#F4B329"
-                strokeWidth="2"
-                strokeLinecap="round"
-              />
-            </svg>
-          </div>
-        </header>
-
+  <svg
+    className="
+      absolute
+      -bottom-[10px]
+      right-0
+      h-[12px]
+      w-[105px]
+    "
+    viewBox="0 0 105 12"
+    fill="none"
+  >
+    <path
+      d="M2 9C28 3 65 8 102 2"
+      stroke="#F4B329"
+      strokeWidth="2.5"
+      strokeLinecap="round"
+    />
+  </svg>
+</div>
+</header>
         {/* ================= HERO ================= */}
 
         <section
@@ -132,7 +131,7 @@ const ResumeUploadPage = () => {
             grid-cols-[60%_40%]
             items-center
             px-[6vw]
-            pt-[7vh]
+            pt-[3vh]
           "
         >
           {/* LEFT */}
@@ -184,18 +183,7 @@ const ResumeUploadPage = () => {
           "
         />
 
-        <div
-          className="
-            pointer-events-none
-            absolute
-            -bottom-[130px]
-            left-[40vw]
-            h-[210px]
-            w-[380px]
-            rounded-[50%]
-            bg-[#edf4ef]
-          "
-        />
+        
 
         {/* ================= SMALL STEPS ================= */}
 
@@ -213,7 +201,7 @@ const ResumeUploadPage = () => {
           <svg
             className="
               absolute
-              -right-[48px]
+              -right-[90px]
               bottom-0
               h-[50px]
               w-[50px]
